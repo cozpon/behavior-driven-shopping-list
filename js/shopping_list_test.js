@@ -3,10 +3,9 @@
 const expect = chai.expect;
 const should = chai.should();
 
-// before(function (){
-let listItem = new ShoppingListItem();
+let listItem = new ShoppingListItem('Avocado', 'Expensive');
 let list = new ShoppingList();
-// });
+
 
 describe("ShoppingListItem", function() {
   it("should be a class", function(){
@@ -24,6 +23,7 @@ describe("ShoppingListItem", function() {
   it("should have a property named 'is_done' ", function(){
     listItem.should.have.a.property("is_done");
   });
+});
 
 describe('.check', function(){
   it('should be a function', function() {
@@ -39,39 +39,33 @@ describe('.uncheck', function(){
 
 describe(".render", function(){
   it("should be a function named 'render'", function(){
-    render().should.be.a("function");
-    expect(listItem.render()).to.be.a("string");
-
-
-  //   listItem.render().should.deep.equal(`<ul>
-  // <li class="completed_${this.is_done}">
-  //   <span>${this.name}</span>
-  //   <span>${this.description}</span>
-  // </li>
-  // <ul>`);
-  // });
-});
-
-});
-
-describe("ShoppingList", function(){
-  it("should be a class", function() {
-    ShoppingList.should.be.a("function");
+    expect(listItem).to.respondTo('render');
   });
 
-  it("has property named items", function() {
-    list.should.have.a.property("items");
+  it("should return an html formatted string", function(){
+    listItem.render().should.equal(`<ul>
+  <li class="completed_false"><span>Avocado</span>
+    <span>Expensive</span>
+  </li>
+<ul>`);
+  });
+});
+
+
+
+describe('ShoppingList', function(){
+  it("should be a class", function() {
+    ShoppingList.should.be.a('function');
+  });
+});
+
+  it('has property named items', function() {
+    list.should.have.a.property('items');
     list.items.should.deep.equal([]);
   });
 
-  describe(".addItem", function(){
-    it("should be a function and accept a single argument: ShoppingListItem", function() {
-      list.addItem().should.be.a("function");
-    });
-
+describe('.addItem', function(){
+  it("should be a function and accept a single argument: ShoppingListItem", function() {
+      expect(list).to.respondTo('addItem');
   });
-
-});
-
-
 });
