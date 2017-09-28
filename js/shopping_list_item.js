@@ -17,12 +17,12 @@ class ShoppingListItem {
   }
 
   render(){
-  let htmlformatstring = `<ul>
+    let htmlformatstring = `<ul>
   <li class="completed_${this.is_done}"><span>${this.name}</span>
     <span>${this.description}</span>
   </li>
 <ul>`;
-return htmlformatstring;
+    return htmlformatstring;
   }
 
 }
@@ -32,8 +32,7 @@ class ShoppingList {
     this.items = [];
   }
   addItem(ShoppingListItem){
+    this.items.push(ShoppingListItem);
 
   }
 }
-module.exports = ShoppingListItem;
-module.exports = ShoppingList;

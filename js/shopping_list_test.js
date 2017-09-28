@@ -4,7 +4,7 @@ const expect = chai.expect;
 const should = chai.should();
 
 let listItem = new ShoppingListItem('Avocado', 'Expensive');
-let list = new ShoppingList();
+let shop = new ShoppingList();
 
 
 describe("ShoppingListItem", function() {
@@ -52,20 +52,23 @@ describe(".render", function(){
 });
 
 
-
 describe('ShoppingList', function(){
   it("should be a class", function() {
     ShoppingList.should.be.a('function');
   });
-});
+
 
   it('has property named items', function() {
-    list.should.have.a.property('items');
-    list.items.should.deep.equal([]);
+    shop.should.have.a.property('items');
+    shop.items.should.deep.equal([]);
   });
-
+});
 describe('.addItem', function(){
-  it("should be a function and accept a single argument: ShoppingListItem", function() {
-      expect(list).to.respondTo('addItem');
+  it('should be a function', function() {
+    expect(shop).to.respondTo('addItem');
+  });
+  it('addItem should add a ShoppingListItem to the items array', function(){
+    shop.addItem('Avocado');
+    expect(shop.items).to.deep.equal(['Avocado']);
   });
 });
