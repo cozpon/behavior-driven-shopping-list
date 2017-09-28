@@ -3,32 +3,75 @@
 const expect = chai.expect;
 const should = chai.should();
 
-
+// before(function (){
+let listItem = new ShoppingListItem();
+let list = new ShoppingList();
+// });
 
 describe("ShoppingListItem", function() {
   it("should be a class", function(){
-  expect(ShoppingListItem).to.be.a('class');
-});
-  it("should have a property named 'name' ", function(){
-  expect(ShoppingListItem).to.have.property("name");
-});
-  it("should have a property named 'description' ", function() {
-  expect(ShoppingListItem).to.have.property("description");
-});
+    ShoppingListItem.should.be.a('function');
+  });
+
+  it("should have a name", function(){
+    expect(listItem).to.have.property("name");
+  });
+
+  it("should have description", function() {
+    expect(listItem).to.have.property("description");
+  });
+
   it("should have a property named 'is_done' ", function(){
-  ShoppingListItem.expected.to.have.property("is_done");
+    listItem.should.have.a.property("is_done");
+  });
+
+describe('.check', function(){
+  it('should be a function', function() {
+    listItem.check().should.equal(is_done = true);
   });
 });
 
+describe('.uncheck', function(){
+  it('should be a function', function() {
+    listItem.uncheck().should.equal(is_done = false);
+  });
+});
+
+describe(".render", function(){
+  it("should be a function named 'render'", function(){
+    render().should.be.a("function");
+    expect(listItem.render()).to.be.a("string");
 
 
+  //   listItem.render().should.deep.equal(`<ul>
+  // <li class="completed_${this.is_done}">
+  //   <span>${this.name}</span>
+  //   <span>${this.description}</span>
+  // </li>
+  // <ul>`);
+  // });
+});
+
+});
+
+describe("ShoppingList", function(){
+  it("should be a class", function() {
+    ShoppingList.should.be.a("function");
+  });
+
+  it("has property named items", function() {
+    list.should.have.a.property("items");
+    list.items.should.deep.equal([]);
+  });
+
+  describe(".addItem", function(){
+    it("should be a function and accept a single argument: ShoppingListItem", function() {
+      list.addItem().should.be.a("function");
+    });
+
+  });
+
+});
 
 
-
-// ShoppingListItem is a class
-// ShoppingListItem has a property named name
-// ShoppingListItem has a property named description
-// ShoppingListItem has a property named is_done
-// ShoppingListItem has a constructor method that accepts 2 arguments, name and description
-// the constructor method sets the new instances
-// name and description properties using the arguments passed in
+});
