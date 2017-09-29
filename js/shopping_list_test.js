@@ -4,17 +4,17 @@ const expect = chai.expect;
 const should = chai.should();
 
 let listItem;
-let shop;
-
-beforeEach(function (){
-  listItem = new ShoppingListItem('Avocado', 'Expensive');
-  shop = new ShoppingList();
-});
+let sl;
 
 
 
 describe("ShoppingListItem", function() {
-  it("should be a class", function(){
+  beforeEach(function (){
+  listItem = new ShoppingListItem('Avocado', 'Expensive');
+  sl = new ShoppingList();
+  });
+
+  it("should be a function", function(){
     ShoppingListItem.should.be.a('function');
   });
 
@@ -33,13 +33,19 @@ describe("ShoppingListItem", function() {
 
   describe('.check', function(){
     it('should be a function', function() {
-      listItem.check().should.equal(is_done = true);
+      expect(listItem).to.respondTo("check");
+    });
+    it('should set is_done to true', function(){
+      expect(listItem.check()).to.be.true;
     });
   });
 
   describe('.uncheck', function(){
     it('should be a function', function() {
-      listItem.uncheck().should.equal(is_done = false);
+      expect(listItem).to.respondTo("uncheck");
+    });
+    it('should set is_done to false', function(){
+      expect(listItem.uncheck()).to.be.false;
     });
   });
 
@@ -58,44 +64,77 @@ describe("ShoppingListItem", function() {
   });
 });
 
+
 describe('ShoppingList', function(){
-  it("should be a class", function() {
+  let listItem = new ShoppingListItem('chocolate', 'its sweet, daddio');
+  let listItem2 = new ShoppingListItem('coffee', 'Life Essential');
+
+  beforeEach(function(){
+    sl = new ShoppingList();
+    let notsli = {name: 'sugar', description: 'for making sweet'};
+  });
+
+  it("should be a function", function() {
     ShoppingList.should.be.a('function');
   });
 
-
   it('has property named items', function() {
-    shop.should.have.a.property('items');
+    sl.should.have.a.property('items');
   });
 
   it('"items" should be an empty array', function(){
-    shop.items.should.deep.equal([]);
+    expect(sl.items).to.deep.equal([]);
   });
+
 
   describe('.addItem', function(){
 
     it('Should be a function named addItem', function() {
-      expect(shop).to.respondTo('addItem');
+      expect(sl).to.respondTo('addItem');
     });
 
     it('Should add a ShoppingListItem to the items array', function(){
-      shop.addItem(listItem);
-      expect(shop.items).to.include('Avocado');
+      expect(sl.addItem(listItem)).to.deep.equal([listItem]);
     });
 
-    it('Should add item from ShoppingListItem', function(){
-      expect(shop.addItem).to.include(ShoppingListItem);
+    it('should throw error if non ShoppingListItem is passed in', function(){
+    expect(function(){sl.addItem(notsli);}).to.throw();
     });
   });
 
   describe('.removeItem', function(){
-    it('Should be a function named removeItem', function(){
-      expect(shop).to.respondTo('removeItem');
+
+    beforeEach(function(){
+      sl.addItem(listItem);
     });
 
-    it('Should remove an item from the Shopping List', function(){
-      shop.removeItem(ShoppingListItem);
-      expect(shop.items).to.not.include("Avocado");
+    it('Should be a function named removeItem', function(){
+      expect(sl).to.respondTo('removeItem');
+    });
+
+    it('Should remove the item in parameter if it exists', function(){
+      expect(sl.removeItem(sl.items[0])).to.deep.equal([]);
+    });
+    it('should remove the last item in the array if there are no parameters', function(){
+      expect(sl.removeItem()).to.deep.equal([]);
+    });
+    it('should throw an error if not a ShoppingListItem object', function(){
+      expect(function(){sl.removeItem(notsli);}).to.throw();
+    });
+  });
+
+
+  describe('render', function(){
+    beforeEach(function(){
+      sl.addItem(listItem);
+      sl.addItem(listItem2);
+    });
+
+    it('Should be a method', function(){
+      expect(ShoppingList).to.respondTo('render');
+    });
+    it('Activating render should concatenate the results on each item in array', function(){
+      expect(sl.render()).to.equal(`<ul>${listItem.render()}${listItem2.render()}</ul>`);
     });
   });
 });

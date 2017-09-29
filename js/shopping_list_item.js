@@ -28,17 +28,42 @@ class ShoppingListItem {
 }
 
 class ShoppingList {
-  constructor (items){
+  constructor (){
     this.items = [];
   }
-  addItem(ShoppingListItem){
-    this.items.push(ShoppingListItem.name);
-  }
-  removeItem(ShoppingListItem){
-    let items = this.items;
-    if (this.items.includes(ShoppingListItem.name)){
-      let items = [];
-      return items;
+  addItem(listItem){
+    if(listItem instanceof ShoppingListItem){
+      this.items.push(listItem);
+      return this.items;
+    }
+    else{
+      throw new Error("Not a ShoppingListItem");
     }
   }
+
+  removeItem(listItem){
+    console.log("hey'hey,",this.items.indexOf(listItem));
+    console.log(listItem);
+    if(listItem instanceof ShoppingListItem && this.items.indexOf(listItem) >= 0){
+      let i = this.items.indexOf(listItem); // where listItem is in shopping List
+      this.items.splice(i, 1);  // remove dat item
+      return this.items;
+    } else if(!listItem) { // if there is invoked parameters
+      this.items.pop(); // remove that last item, daddio!
+      return this.items;
+    } else {
+      throw new Error("item not in your list!");
+    }
+
+
+  }
+
+  render(){
+    var newString = "";
+    this.items.forEach(function(item){
+      newString += item.render();
+    });
+    return `<ul>${newString}</ul>`;
+  }
+
 }
