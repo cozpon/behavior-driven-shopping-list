@@ -32,7 +32,13 @@ class ShoppingList {
     this.items = [];
   }
   addItem(ShoppingListItem){
-    this.items.push(ShoppingListItem);
-
+    this.items.push(ShoppingListItem.name);
+  }
+  removeItem(ShoppingListItem){
+    let items = this.items;
+    if (this.items.includes(ShoppingListItem.name)){
+      let items = [];
+      return items;
+    }
   }
 }
